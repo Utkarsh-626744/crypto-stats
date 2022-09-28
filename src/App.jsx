@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   pendingRequest: false,
   uri: "",
   accounts: [],
-  address: "",
+  address: "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
   result: null,
   assets: [],
   balance: "-",
@@ -165,27 +165,33 @@ export default class App extends Component {
 
     return (
       <>
-        <div className="container p-5">
-          <nav className="navbar navbar-expand-lg px-4">
+        <div style={{maxWidth: 700}} className="container mx-lg-auto mt-4">
+          <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">
               <span className="navbar-brand">
                 Crypto Stats
               </span>
-              <div className="collapse navbar-collapse justify-content-end">
-                {connected ? <button onClick={this.killSession} className="btn btn-danger">
-                  disconnect
-                </button> : <button disabled={fetching} onClick={this.connect} className="btn btn-primary">connect</button>}
-              </div>
+              {connected ? <button onClick={this.killSession} className="btn btn-danger">
+                disconnect
+              </button> : <button disabled={fetching} onClick={this.connect} className="btn btn-primary">connect</button>}
+              {/* <div className="collapse navbar-collapse justify-content-end">
+              </div> */}
             </div>
           </nav>
 
-          {address && <div className="container p-5">
+          {/* connected &&  */address ? <div className="container">
             <div className="my-3">
-              Wallet Address <span className="text-primary">{address}</span>
+              Wallet Address <span className="text-info text-break">{address}</span>
             </div>
             <div className="mt-2">
               <div className="row">
-                <div className="col-8">
+              <div className="col-12 mb-3">
+                  <h3>Balance</h3>
+                  <h4>
+                    <span>{balance}</span>
+                  </h4>
+                </div>
+                <div className="col-12">
                   <select className="form-select" onChange={this.onCryptoChange}>
                     <option value="-">Select crypto</option>
                     {assets.map((asset) => (
@@ -193,12 +199,11 @@ export default class App extends Component {
                     ))}
                   </select>
                 </div>
-                <div className="col-4">
-                  <h3>Balance: <span>{balance}</span></h3>
-                </div>
               </div>
             </div>
-          </div>}
+          </div> : (<div className="container">
+            <small>No wallet connected yet</small>
+          </div>)}
 
         </div>
       </>
